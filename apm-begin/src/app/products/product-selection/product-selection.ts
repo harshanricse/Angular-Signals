@@ -17,4 +17,12 @@ export class ProductSelection {
 
   products = signal(ProductData.products);
 
+  onIncrease(){
+    this.quantity.update((q)=> q + 1);
+  }
+
+  onDecrease(){
+    this.quantity.update((q)=> q - 1 <=0 ? 0 : q-1);
+  }
+
 }
