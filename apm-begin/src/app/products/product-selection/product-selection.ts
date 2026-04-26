@@ -1,11 +1,12 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProductData } from '../product-data';
 import { Product } from '../product';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-selection',
-  imports: [FormsModule],
+  imports: [FormsModule, CurrencyPipe],
   templateUrl: './product-selection.html',
   styleUrl: './product-selection.css'
 })
@@ -17,6 +18,9 @@ export class ProductSelection {
 
   products = signal(ProductData.products);
 
+  total = computed(()=> (this.selectedProduct()?.price ?? 0) * this.quantity());
+  color = computed(()=> this.total() >= 200 ? 'green' : 'blue')
+
   onIncrease(){
     this.quantity.update((q)=> q + 1);
   }
@@ -24,5 +28,8 @@ export class ProductSelection {
   onDecrease(){
     this.quantity.update((q)=> q - 1 <=0 ? 0 : q-1);
   }
+
+  // use an effect to log a signal's value
+  qtyEffect = effect(()=> console.log('quantity',this.quantity()));
 
 }
