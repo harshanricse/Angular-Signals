@@ -22,8 +22,11 @@ export class ProductSelection {
 
   //use this way, when the user navigates to the products-list component the http call is made
   // and when the user moves away from the products-list component, the data is destroyed
-  productsResource = this.productService.createProducts();
-  products = this.productsResource.value;
+  //productsResource = this.productService.createProducts();
+  products = this.productService.productsResource.value;
+  isLoading = this.productService.productsResource.isLoading;
+  error = this.productService.productsResource.error;
+  errorMessage = computed(()=> this.error()?this.error()?.message: '');
 
   total = computed(()=> (this.selectedProduct()?.price ?? 0) * this.quantity());
   color = computed(()=> this.total() >= 200 ? 'green' : 'blue')

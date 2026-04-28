@@ -3,6 +3,11 @@
     {{pageTitle}}
   </div>
 
+  @if (isLoading()){
+    <div>...loading products</div>
+  } @else if (errorMessage()) {
+    <div style="color:red">An error occured: {{errorMessage()}}</div>
+  } @else {
   <div class="grid">
     <div class="row">
       <div class="cellFull">
@@ -33,10 +38,12 @@
           <button class="qtyButton qtyButtonLeft" (click)="onDecrease()">-</button>
           <input class="quantityInput" id='quantity' type='number' [(ngModel)]="quantity"></div>
           <button class="qtyButton qtyButtonRight" (click)="onIncrease()">+</button>
+       </div>
     </div>
     <div class="row">
-    <div class="cellLeft">Total: </div>
-    <div class="cellRight" [style.color]="color()">{{total() | currency}}</div>
+      <div class="cellLeft">Total: </div>
+      <div class="cellRight" [style.color]="color()">{{total() | currency}}</div>
+    </div>
   </div>
-  </div>
+   }
 </div>
